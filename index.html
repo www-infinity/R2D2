@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>R2D2 — Self-Building Signal Intelligence</title>
+  <meta name="description" content="R2D2 Signal Intelligence: emoji phone numbers, signal processing, astronomical data, token economy, and trending website intel.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     NAV
+═══════════════════════════════════════════════════════════════════════════ -->
+<nav id="nav">
+  <div class="nav-logo">🤖 R2D2</div>
+  <div class="nav-right">
+    <span id="nav-level"  class="level-badge">♣️ Club</span>
+    <span id="nav-tokens" class="token-display">🟡 0</span>
+    <button id="nav-warp" class="btn btn-ghost">⚪ Warp</button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════════════════════════════════════ -->
+<section id="hero" class="section-hero">
+  <div class="hero-content">
+    <div class="hero-text">
+      <h1 class="hero-title">R2D2</h1>
+      <p class="hero-sub">Self-Building Signal Intelligence</p>
+      <p class="hero-desc">
+        Compiles data constantly · Searches any signal position<br>
+        Reads any book · Any language · Stars · Planet cores · Everything
+      </p>
+      <div class="hero-cta">
+        <button class="btn btn-primary btn-large" onclick="scrollToSection('chain')">
+          ⚡ Start Building
+        </button>
+        <button class="btn btn-outline btn-large" onclick="scrollToSection('processor')">
+          📡 Signal Processor
+        </button>
+      </div>
+    </div>
+    <div class="hero-bot">
+      <canvas id="r2d2-canvas" width="240" height="260"></canvas>
+      <div id="bot-status" class="bot-status">● IDLE</div>
+    </div>
+  </div>
+  <div class="hero-scroll">scroll to explore ↓</div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     ONE-CLICK VALUE CHAIN
+═══════════════════════════════════════════════════════════════════════════ -->
+<section id="chain" class="section">
+  <h2 class="section-title">One Click — Real Value</h2>
+  <p class="section-sub">
+    Each click advances your chain. Earn 🟡 tokens to unlock the next step.
+    A few clicks takes any idea from zero to real digital assets.
+  </p>
+
+  <!-- chain rendered by game.js -->
+  <div id="chain-flow" class="chain-flow"></div>
+
+  <div id="chain-detail" class="chain-detail hidden">
+    <div id="chain-detail-content"></div>
+    <button class="btn btn-primary" id="chain-advance" style="display:none">Advance →</button>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     YOUR SIGNAL NUMBER
+═══════════════════════════════════════════════════════════════════════════ -->
+<section id="number" class="section">
+  <h2 class="section-title">Your Signal Number</h2>
+  <p class="section-sub">
+    8 emoji blocks · Device-fingerprinted · Unique to you ·
+    Numbers grow longer as more people join the network
+  </p>
+  <div class="number-card">
+    <div id="number-blocks" class="number-blocks">
+      <!-- rendered by r2d2.js -->
+    </div>
+    <div id="number-meta" class="number-meta">
+      <span id="number-device-id">Loading…</span>
+      <span id="number-created"></span>
+    </div>
+    <div class="number-actions">
+      <button class="btn btn-primary"  id="copy-number">📋 Copy</button>
+      <button class="btn btn-outline"  id="share-number">🔗 Share</button>
+      <button class="btn btn-ghost"    id="play-number">🔊 Play Signal</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     SIGNAL PROCESSOR
+═══════════════════════════════════════════════════════════════════════════ -->
+<section id="processor" class="section">
+  <h2 class="section-title">R2D2 Signal Processor</h2>
+  <p class="section-sub">
+    Reads any text in any language · Decodes signals from stars, pulsars, and planet cores ·
+    Every scan earns +3 🟡
+  </p>
+
+  <div class="processor-layout">
+    <!-- INPUT -->
+    <div>
+      <div class="processor-modes">
+        <button class="mode-btn active" data-mode="text">📖 Text</button>
+        <button class="mode-btn"       data-mode="astro">🌟 Astronomical</button>
+        <button class="mode-btn"       data-mode="planet">🌍 Planet Core</button>
+      </div>
+
+      <textarea id="signal-input"
+        placeholder="Paste any text, book excerpt, article in any language…"></textarea>
+
+      <div id="astro-controls" class="astro-controls hidden">
+        <label>Signal Source</label>
+        <select id="astro-source">
+          <option value="star">⭐ Star — Electromagnetic</option>
+          <option value="pulsar">💫 Pulsar — Radio</option>
+          <option value="planet">🌍 Planet Core — Seismic</option>
+          <option value="nebula">🌌 Nebula — Spectral</option>
+        </select>
+        <label>Carrier Frequency</label>
+        <input type="range" id="astro-freq" min="1" max="1000" value="440">
+        <span id="astro-freq-val">440 Hz</span>
+      </div>
+
+      <button id="scan-btn" class="btn btn-primary btn-large" style="width:100%;margin-top:.5rem">
+        📡 SCAN
+      </button>
+    </div>
+
+    <!-- OUTPUT -->
+    <div>
+      <canvas id="signal-canvas" width="400" height="160"></canvas>
+      <div id="signal-report" class="signal-report">
+        <p class="report-placeholder">R2D2 standing by — enter data and hit SCAN</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     SIGNAL DIRECTORY
+═══════════════════════════════════════════════════════════════════════════ -->
+<section id="directory" class="section">
+  <h2 class="section-title">Signal Directory</h2>
+  <p class="section-sub">
+    Click any contact to dial · Numbers grow as more people join ·
+    Powered by the signal generator tool
+  </p>
+
+  <div class="directory-controls">
+    <input type="text" id="dir-search" placeholder="🔍 Search name or tag…" class="dir-search">
+    <div class="dir-filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn"        data-filter="online">🟢 Online</button>
+      <button class="filter-btn"        data-filter="favorite">⭐ Favourites</button>
+    </div>
+  </div>
+
+  <div id="contacts-grid" class="contacts-grid">
+    <!-- rendered by r2d2.js -->
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     GAME HUB
+═══════════════════════════════════════════════════════════════════════════ -->
+<section id="game" class="section">
+  <h2 class="section-title">Game Hub 🟡</h2>
+  <p class="section-sub">Earn tokens · Level up · Unlock new worlds · ⭐ Find trends that make your site fly</p>
+
+  <div class="game-dashboard">
+
+    <!-- Token hero -->
+    <div class="token-hero">
+      <div class="token-big"  id="token-big">0</div>
+      <div class="token-label">🟡 TOKENS</div>
+      <div class="level-display" id="level-display">♣️ Club</div>
+      <div class="level-bar-wrap">
+        <div class="level-bar" id="level-bar"></div>
+      </div>
+      <div class="level-progress-label" id="level-progress-label">0 / 100 to ♦️ Diamond</div>
+    </div>
+
+    <!-- Earn actions -->
+    <div class="earn-actions">
+      <div class="earn-card">
+        <div class="earn-icon">👁️</div>
+        <div class="earn-name">Watch &amp; Earn</div>
+        <div class="earn-desc">Stay on site — 1 token lands every 10 seconds automatically.</div>
+        <div id="watch-timer" class="earn-timer">+1 🟡 every 10 s</div>
+        <div class="earn-amount">+1 🟡</div>
+      </div>
+
+      <div class="earn-card">
+        <div class="earn-icon">🎮</div>
+        <div class="earn-name">Play Game &amp; Collect</div>
+        <div class="earn-desc">Answer a signal challenge question for bonus tokens.</div>
+        <button class="btn btn-yellow" onclick="GameHub.playGame()">▶ PLAY</button>
+        <div class="earn-amount">+5–10 🟡</div>
+      </div>
+
+      <div class="earn-card">
+        <div class="earn-icon">📡</div>
+        <div class="earn-name">Scan &amp; Research</div>
+        <div class="earn-desc">Use the signal processor — every scan earns research tokens.</div>
+        <button class="btn btn-outline" onclick="scrollToSection('processor')">→ Processor</button>
+        <div class="earn-amount">+3 🟡 <span style="font-size:.7rem;color:var(--muted)">(×2 with 🍄)</span></div>
+      </div>
+    </div>
+
+    <!-- ⭐ Trending Intel panel (shown when Star boost is active) -->
+    <div id="trending-panel" class="trending-panel hidden">
+      <h3>⭐ TRENDING INTEL — MAKE YOUR SITE FLY</h3>
+      <div class="trending-grid">
+        <!-- populated by game.js -->
+      </div>
+      <div class="trending-refresh">
+        <span id="trending-ts"></span>
+        <button class="btn btn-ghost" style="padding:6px 14px;font-size:.8rem"
+                onclick="GameHub.refreshTrending()">🔄 Refresh</button>
+      </div>
+    </div>
+
+    <!-- Boosts -->
+    <div class="boosts-panel">
+      <h3>ACTIVE BOOSTS</h3>
+      <div id="active-boosts" class="boosts-list">
+        <div class="no-boosts">No active boosts</div>
+      </div>
+      <div class="boost-actions">
+        <button class="btn btn-star"     onclick="GameHub.activateBoost('star')">
+          ⭐ Trending Boost — 25 🟡 · Surfaces trending website strategies for 30 min
+        </button>
+        <button class="btn btn-mushroom" onclick="GameHub.activateBoost('mushroom')">
+          🍄 Research ×2 — 15 🟡 · Doubles all scan token earnings for 30 min
+        </button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">🐛</div>
+        <div class="stat-val" id="bugs-stomped">0</div>
+        <div class="stat-label">Bugs Stomped</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">⚪</div>
+        <div class="stat-val" id="warps-used">0</div>
+        <div class="stat-label">Warps Used</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🔬</div>
+        <div class="stat-val" id="total-earned">0</div>
+        <div class="stat-label">Total Earned</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📡</div>
+        <div class="stat-val" id="scans-done">0</div>
+        <div class="stat-label">Signals Scanned</div>
+      </div>
+    </div>
+
+  </div><!-- end .game-dashboard -->
+
+  <!-- Level Stage Pages ♣️ ♦️ ♥️ ♠️ -->
+  <div class="level-stages">
+    <div class="level-tabs">
+      <button class="level-tab active" data-level="club">♣️ Club</button>
+      <button class="level-tab"        data-level="diamond">♦️ Diamond</button>
+      <button class="level-tab"        data-level="heart">♥️ Heart</button>
+      <button class="level-tab"        data-level="spade">♠️ Spade</button>
+    </div>
+    <div id="level-pages">
+      <!-- rendered by game.js -->
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-signal" id="footer-number">Loading signal…</div>
+    <div class="footer-links">
+      <a href="https://github.com/www-infinity/Infinity-Graphics" target="_blank" rel="noopener">
+        🎨 Infinity-Graphics
+      </a>
+      <a href="https://github.com/www-infinity/Hydrhost" target="_blank" rel="noopener">
+        📡 HydrHost
+      </a>
+      <a href="https://github.com/www-infinity/R2D2" target="_blank" rel="noopener">
+        🤖 R2D2 Repo
+      </a>
+    </div>
+    <div class="footer-tagline">
+      R2D2 · Self-Building Signal Intelligence · Powered by Hydrogen · Hosted on GitHub Pages
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     CALL OVERLAY
+═══════════════════════════════════════════════════════════════════════════ -->
+<div id="call-overlay" class="call-overlay hidden">
+  <div class="call-card">
+    <div class="call-avatar">📡</div>
+    <div id="call-name"     class="call-name">…</div>
+    <div id="call-number"   class="call-number"></div>
+    <canvas id="call-waveform" width="300" height="70"></canvas>
+    <div id="call-phase"    class="call-phase">SCANNING…</div>
+    <div id="call-duration" class="call-duration hidden">00:00</div>
+    <div class="call-actions">
+      <button class="btn btn-ghost" id="mute-btn"
+              onclick="CallManager.toggleMute()">🎤 Mute</button>
+      <button class="btn btn-red"   onclick="CallManager.hangup()">📵 Hang Up</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     GAME MODAL
+═══════════════════════════════════════════════════════════════════════════ -->
+<div id="game-overlay" class="call-overlay hidden">
+  <div class="game-modal">
+    <h3>🎮 Signal Challenge</h3>
+    <p id="game-prompt"></p>
+    <div id="game-options"   class="game-options"></div>
+    <div id="game-feedback"  class="game-feedback"></div>
+    <button class="btn btn-ghost" onclick="GameHub.closeGame()">✕ Close</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     TOAST
+═══════════════════════════════════════════════════════════════════════════ -->
+<div id="toast" class="toast hidden"></div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     SCRIPTS  (phone → signal → game → r2d2)
+═══════════════════════════════════════════════════════════════════════════ -->
+<script src="js/phone.js"></script>
+<script src="js/signal.js"></script>
+<script src="js/game.js"></script>
+<script src="js/r2d2.js"></script>
+
+</body>
+</html>
