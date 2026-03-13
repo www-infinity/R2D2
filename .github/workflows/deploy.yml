@@ -1,0 +1,80 @@
+# ── R2D2 — Deploy to GitHub Pages ──────────────────────────────────────────────
+#
+# Triggers on every push to main (and can be run manually via the Actions tab).
+#
+# The workflow uses the built-in GITHUB_TOKEN for Pages deployment.
+# If you have stored a Personal Access Token as the secret GHP_SECRET it will
+# be preferred for any git-push steps that need elevated permissions.
+#
+# ── Cloudflare Pages ────────────────────────────────────────────────────────────
+# To also deploy to Cloudflare Pages, add these two secrets in
+# Settings → Secrets → Actions:
+#   CLOUDFLARE_API_TOKEN   (from dash.cloudflare.com → My Profile → API Tokens)
+#   CLOUDFLARE_ACCOUNT_ID  (from the right sidebar of any Cloudflare dashboard page)
+# Then uncomment the "Deploy to Cloudflare Pages" step below.
+# ───────────────────────────────────────────────────────────────────────────────
+
+name: Deploy R2D2
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy-pages.outputs.page_url }}
+
+    steps:
+      # ── 1. Checkout ──────────────────────────────────────────────────────────
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # ── 2. Validate the site files exist ─────────────────────────────────────
+      - name: Verify site files
+        run: |
+          echo "=== Site contents ==="
+          ls -la
+          test -f index.html || (echo "ERROR: index.html not found"; exit 1)
+          echo "✅ index.html present"
+
+      # ── 3. Configure GitHub Pages ─────────────────────────────────────────────
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      # ── 4. Upload the whole repo as the Pages artifact ────────────────────────
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "."
+
+      # ── 5. Deploy to GitHub Pages ─────────────────────────────────────────────
+      - name: Deploy to GitHub Pages
+        id: deploy-pages
+        uses: actions/deploy-pages@v4
+
+      # ── 6. (Optional) Deploy to Cloudflare Pages ──────────────────────────────
+      # Uncomment the block below after adding CLOUDFLARE_API_TOKEN and
+      # CLOUDFLARE_ACCOUNT_ID secrets to this repository.
+      #
+      # - name: Deploy to Cloudflare Pages
+      #   if: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
+      #   uses: cloudflare/wrangler-action@v3
+      #   with:
+      #     apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      #     accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      #     command: pages deploy . --project-name=r2d2 --branch=main
+      #   env:
+      #     CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
